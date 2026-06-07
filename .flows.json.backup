@@ -1,0 +1,308 @@
+[
+    {
+        "id": "bb1f693ad8cbdfe3",
+        "type": "tab",
+        "label": "Interfaz - Proyecto",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "01fbb31d1160f865",
+        "type": "tab",
+        "label": "Lógica - Proyecto",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "81b3a9767f31b44e",
+        "type": "tab",
+        "label": "Ultrasonido - Proyecto",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cf61a41fd0858b39",
+        "type": "ui-base",
+        "name": "dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "53f17633b2057e9d",
+        "type": "ui-theme",
+        "name": "Tema oscuro SmartPark",
+        "colors": {
+            "surface": "#1e1e28",
+            "primary": "#4da8da",
+            "bgPage": "#121212",
+            "groupBg": "#1e1e28",
+            "groupOutline": "#333344"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "65d141b594174297",
+        "type": "ui-page",
+        "name": "Monitor de estacionamiento",
+        "ui": "cf61a41fd0858b39",
+        "path": "/page12",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "53f17633b2057e9d",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "28ee7538253ef0be",
+        "type": "ui-group",
+        "name": "Monitoreo",
+        "page": "65d141b594174297",
+        "width": "16",
+        "height": "11",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "da0c8f1783eb42d0",
+        "type": "link in",
+        "z": "bb1f693ad8cbdfe3",
+        "name": "Destino 2",
+        "links": [],
+        "x": 355,
+        "y": 100,
+        "wires": [
+            [
+                "947a71b9cc29f6dd"
+            ]
+        ]
+    },
+    {
+        "id": "947a71b9cc29f6dd",
+        "type": "ui-template",
+        "z": "bb1f693ad8cbdfe3",
+        "group": "28ee7538253ef0be",
+        "page": "",
+        "ui": "",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n    <div class=\"panel-estacionamiento\">\n\n        <div class=\"header-dashboard\">\n            <h1 class=\"titulo-vendedor\"><i class=\"fa-solid fa-radar\"></i> SmartPark: Estacionamiento Inteligente</h1>\n            <div class=\"info-proyecto\">\n                <p><strong>Caso de Uso:</strong> Monitoreo ultrasónico en tiempo real para detección de ocupación de\n                    vehículos.</p>\n                <p><strong>Objetivo:</strong> Proveer una interfaz visual intuitiva para minimizar el tiempo de búsqueda\n                    de parqueo.</p>\n            </div>\n        </div>\n\n        <div class=\"caja-resumen\">\n            <div class=\"dato-resumen\">\n                <h3>Total Plazas</h3>\n                <p style=\"color: #4da8da;\">{{msg.payload.resumen.total}}</p>\n            </div>\n            <div class=\"dato-resumen\">\n                <h3>Disponibles</h3>\n                <p class=\"color-libre\">{{msg.payload.resumen.libres}}</p>\n            </div>\n            <div class=\"dato-resumen\">\n                <h3>Ocupadas</h3>\n                <p class=\"color-ocupado\">{{msg.payload.resumen.ocupadas}}</p>\n            </div>\n        </div>\n\n        <div class=\"grid-plazas\">\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_1, 'plaza-libre': !msg.payload.estadoSensores.plaza_1}\">\n                <h4>PLAZA 01</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_1, 'color-libre': !msg.payload.estadoSensores.plaza_1}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_1, 'color-libre': !msg.payload.estadoSensores.plaza_1}\">\n                    {{ msg.payload.estadoSensores.plaza_1 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_2, 'plaza-libre': !msg.payload.estadoSensores.plaza_2}\">\n                <h4>PLAZA 02</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_2, 'color-libre': !msg.payload.estadoSensores.plaza_2}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_2, 'color-libre': !msg.payload.estadoSensores.plaza_2}\">\n                    {{ msg.payload.estadoSensores.plaza_2 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_3, 'plaza-libre': !msg.payload.estadoSensores.plaza_3}\">\n                <h4>PLAZA 03</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_3, 'color-libre': !msg.payload.estadoSensores.plaza_3}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_3, 'color-libre': !msg.payload.estadoSensores.plaza_3}\">\n                    {{ msg.payload.estadoSensores.plaza_3 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_4, 'plaza-libre': !msg.payload.estadoSensores.plaza_4}\">\n                <h4>PLAZA 04</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_4, 'color-libre': !msg.payload.estadoSensores.plaza_4}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_4, 'color-libre': !msg.payload.estadoSensores.plaza_4}\">\n                    {{ msg.payload.estadoSensores.plaza_4 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_5, 'plaza-libre': !msg.payload.estadoSensores.plaza_5}\">\n                <h4>PLAZA 05</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_5, 'color-libre': !msg.payload.estadoSensores.plaza_5}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_5, 'color-libre': !msg.payload.estadoSensores.plaza_5}\">\n                    {{ msg.payload.estadoSensores.plaza_5 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_6, 'plaza-libre': !msg.payload.estadoSensores.plaza_6}\">\n                <h4>PLAZA 06</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_6, 'color-libre': !msg.payload.estadoSensores.plaza_6}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_6, 'color-libre': !msg.payload.estadoSensores.plaza_6}\">\n                    {{ msg.payload.estadoSensores.plaza_6 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_7, 'plaza-libre': !msg.payload.estadoSensores.plaza_7}\">\n                <h4>PLAZA 07</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_7, 'color-libre': !msg.payload.estadoSensores.plaza_7}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_7, 'color-libre': !msg.payload.estadoSensores.plaza_7}\">\n                    {{ msg.payload.estadoSensores.plaza_7 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_8, 'plaza-libre': !msg.payload.estadoSensores.plaza_8}\">\n                <h4>PLAZA 08</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_8, 'color-libre': !msg.payload.estadoSensores.plaza_8}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_8, 'color-libre': !msg.payload.estadoSensores.plaza_8}\">\n                    {{ msg.payload.estadoSensores.plaza_8 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_9, 'plaza-libre': !msg.payload.estadoSensores.plaza_9}\">\n                <h4>PLAZA 09</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_9, 'color-libre': !msg.payload.estadoSensores.plaza_9}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_9, 'color-libre': !msg.payload.estadoSensores.plaza_9}\">\n                    {{ msg.payload.estadoSensores.plaza_9 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n            <div class=\"plaza\"\n                :class=\"{'plaza-ocupada': msg.payload.estadoSensores.plaza_10, 'plaza-libre': !msg.payload.estadoSensores.plaza_10}\">\n                <h4>PLAZA 10</h4>\n                <i class=\"fa-solid fa-car icono-auto\" :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_10, 'color-libre': !msg.payload.estadoSensores.plaza_10}\"></i>\n                <div class=\"estado-texto\"\n                    :class=\"{'color-ocupado': msg.payload.estadoSensores.plaza_10, 'color-libre': !msg.payload.estadoSensores.plaza_10}\">\n                    {{ msg.payload.estadoSensores.plaza_10 ? 'OCUPADO' : 'LIBRE' }}\n                </div>\n            </div>\n        </div>\n\n    </div>\n</template>\n\n<style>\n    .panel-estacionamiento {\n        font-family: 'Poppins', sans-serif;\n        color: #e0e0e0;\n        padding: 10px;\n        width: 100%;\n        box-sizing: border-box;\n    }\n\n    .header-dashboard {\n        text-align: center;\n        margin-bottom: 20px;\n        padding-bottom: 15px;\n        border-bottom: 1px solid rgba(255, 255, 255, 0.1);\n    }\n\n    .titulo-vendedor {\n        color: #4da8da;\n        font-size: 2.5em;\n        font-weight: 700;\n        margin-bottom: 5px;\n        text-shadow: 0px 0px 15px rgba(77, 168, 218, 0.3);\n    }\n\n    .info-proyecto p {\n        margin: 5px 0;\n        font-weight: 300;\n        color: #a0a0a0;\n    }\n\n    .caja-resumen {\n        display: flex;\n        justify-content: center;\n        gap: 30px;\n        margin-bottom: 30px;\n    }\n\n    .dato-resumen {\n        background: rgba(255, 255, 255, 0.03);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 15px;\n        padding: 15px 30px;\n        text-align: center;\n        backdrop-filter: blur(10px);\n        min-width: 130px;\n        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);\n    }\n\n    .dato-resumen h3 {\n        margin: 0;\n        font-size: 0.9em;\n        color: #888;\n        font-weight: 400;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n\n    .dato-resumen p {\n        margin: 10px 0 0;\n        font-size: 2.2em;\n        font-weight: 700;\n    }\n\n    .grid-plazas {\n        display: grid;\n        grid-template-columns: repeat(5, 1fr);\n        gap: 20px;\n        padding: 5px;\n    }\n\n    .plaza {\n        background: rgba(30, 30, 40, 0.6);\n        padding: 20px 10px;\n        /* Reduje un poco el padding para que entren bien */\n        text-align: center;\n        border-radius: 16px;\n        transition: all 0.4s ease;\n        position: relative;\n    }\n\n    .plaza h4 {\n        margin: 0 0 10px 0;\n        font-size: 1.1em;\n        color: #fff;\n    }\n\n    .icono-auto {\n        font-size: 3em;\n        margin-bottom: 10px;\n        transition: all 0.3s ease;\n    }\n\n    .plaza-libre {\n        border: 2px solid #00f2c3;\n        box-shadow: 0 0 20px rgba(0, 242, 195, 0.15);\n    }\n\n    .plaza-libre:hover {\n        box-shadow: 0 0 30px rgba(0, 242, 195, 0.3);\n        transform: translateY(-5px);\n    }\n\n    .color-libre {\n        color: #00f2c3;\n        text-shadow: 0 0 10px rgba(0, 242, 195, 0.5);\n    }\n\n    .plaza-ocupada {\n        border: 2px solid #fd5d93;\n        box-shadow: 0 0 20px rgba(253, 93, 147, 0.15);\n        opacity: 0.8;\n    }\n\n    .plaza-ocupada:hover {\n        box-shadow: 0 0 30px rgba(253, 93, 147, 0.3);\n        transform: translateY(-5px);\n    }\n\n    .color-ocupado {\n        color: #fd5d93;\n        text-shadow: 0 0 10px rgba(253, 93, 147, 0.5);\n    }\n\n    .estado-texto {\n        font-size: 1em;\n        font-weight: 600;\n        letter-spacing: 2px;\n    }\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 480,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "17177d7cdfeeebfd",
+        "type": "link in",
+        "z": "01fbb31d1160f865",
+        "name": "Destino 1",
+        "links": [],
+        "x": 205,
+        "y": 100,
+        "wires": [
+            [
+                "0c7a32124b4c4020"
+            ]
+        ]
+    },
+    {
+        "id": "0c7a32124b4c4020",
+        "type": "function",
+        "z": "01fbb31d1160f865",
+        "name": "Calcular disponibilidad",
+        "func": "//Recibimos los datos\nlet sensores = msg.payload;\n\n//Nuevas variables\nlet totalPlazas = 10;\nlet plazasOcupadas = 0;\n\n//Conteo de ocupados\nfor (let plaza in sensores) {\n    if (sensores[plaza] === true) {\n        plazasOcupadas++;\n    }\n}\n\n//Conteo de libres\nlet plazasLibres = totalPlazas - plazasOcupadas;\n\nmsg.payload = {\n    estadoSensores: sensores, \n    resumen: {\n        total: totalPlazas,\n        ocupadas: plazasOcupadas,\n        libres: plazasLibres\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "c0738de94486a27a",
+                "ce87efb8033634ef"
+            ]
+        ]
+    },
+    {
+        "id": "c0738de94486a27a",
+        "type": "link out",
+        "z": "01fbb31d1160f865",
+        "name": "Salida 2",
+        "mode": "link",
+        "links": [
+            "da0c8f1783eb42d0"
+        ],
+        "x": 515,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ce87efb8033634ef",
+        "type": "debug",
+        "z": "01fbb31d1160f865",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "97572beb76812cfd",
+        "type": "inject",
+        "z": "81b3a9767f31b44e",
+        "name": "Intervalo de lectura",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "15",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "1b9bb2c7b8acb1b4"
+            ]
+        ]
+    },
+    {
+        "id": "1b9bb2c7b8acb1b4",
+        "type": "function",
+        "z": "81b3a9767f31b44e",
+        "name": "Emular sensores (4 plazas)",
+        "func": "let lecturaSensores = {};\n\n//El bucle se encarga de generar 10 plazas\nfor (let i = 1; i <= 10; i++) {\n    lecturaSensores[`plaza_${i}`] = Math.random() >= 0.5;\n}\n\nmsg.payload = lecturaSensores;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 180,
+        "wires": [
+            [
+                "41324eeb404112bd",
+                "aa4fcc5dbf1d248c"
+            ]
+        ]
+    },
+    {
+        "id": "41324eeb404112bd",
+        "type": "debug",
+        "z": "81b3a9767f31b44e",
+        "name": "ver sensores",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "aa4fcc5dbf1d248c",
+        "type": "link out",
+        "z": "81b3a9767f31b44e",
+        "name": "Salida 1",
+        "mode": "link",
+        "links": [
+            "17177d7cdfeeebfd"
+        ],
+        "x": 715,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3b697102745e6b34",
+        "type": "comment",
+        "z": "81b3a9767f31b44e",
+        "name": "",
+        "info": "",
+        "x": 540,
+        "y": 340,
+        "wires": []
+    }
+]
